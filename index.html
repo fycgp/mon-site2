@@ -41,7 +41,27 @@
       font-size: 1rem;
     }
     .menu a:focus, .menu button:focus { outline: 2px solid var(--focus); outline-offset: 2px; }
-
+/* Barre en haut (topbar) */
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background: var(--accent);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}
+.topbar .menu a, .topbar .menu button {
+  color: #fff;
+}
+@media (max-width: 640px) {
+  body { padding-top: 56px; } /* ajuster si nécessaire */
+}
     /* Sous-menu */
     .submenu {
       position: absolute;
@@ -74,17 +94,19 @@
   </style>
 </head>
 <body>
-  <header>
-    <h1>Recherche d'appartements</h1>
-  </header>
-
-  <!-- Menu principal : intégrez-le où vous voulez dans votre body -->
+  <!-- Barre en haut -->
+<div class="topbar" role="navigation" aria-label="Barre de navigation principale">
   <nav aria-label="Navigation principale">
     <ul class="menu" role="menubar">
+      <li role="none"><a href="#" role="menuitem" tabindex="0">Accueil</a></li>
+
+      <li class="has-sub" role="none">
+        <button class="menu-toggle" aria-haspopup="true" aria-expanded="false" aria-controls="submenu-1" type="button">Produits ▾</button>
+        <ul id="submenu-1" class="submenu" role="menu" aria-hidden="true">
       <li role="none">
         <a href="#" role="menuitem" tabindex="0">Accueil</a>
       </li>
-
+ <!-- Menu principal : intégrez-le où vous voulez dans votre body -->
       <li class="has-sub" role="none">
         <button class="menu-toggle" aria-haspopup="true" aria-expanded="false" aria-controls="submenu-1" type="button">
           Âge
@@ -108,6 +130,10 @@
       </li>
     </ul>
   </nav>
+</div>
+  <header>
+    <h1>Recherche d'appartements</h1>
+  </header>
 
   <script>
     // Script minimal pour toggler le sous-menu et fermer si clic en dehors
