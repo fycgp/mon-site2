@@ -16,7 +16,7 @@
       background-color: var(--bg);
       color: #000;
       line-height: 1.4;
-      padding: 1rem;
+      padding: 70px 1rem 1rem 1rem; /* <-- padding-top augmenté pour laisser la place à la topbar */
     }
 
     header { text-align: center; margin-bottom: 1rem; }
@@ -27,8 +27,26 @@
       text-decoration: underline;
     }
 
-    /* Navigation */
-    nav { margin-top: 0.75rem; display: flex; justify-content: center; }
+    /* Barre en haut (topbar) */
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 56px;
+      background: var(--accent);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    }
+    .topbar .menu a, .topbar .menu button {
+      color: #fff;
+    }
+
+    /* Navigation (dans la topbar) */
     .menu { list-style: none; margin: 0; padding: 0; display: flex; gap: 1rem; align-items: center; }
     .menu > li { position: relative; }
     .menu a, .menu button {
@@ -41,27 +59,7 @@
       font-size: 1rem;
     }
     .menu a:focus, .menu button:focus { outline: 2px solid var(--focus); outline-offset: 2px; }
-/* Barre en haut (topbar) */
-.topbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 56px;
-  background: var(--accent);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 200;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
-}
-.topbar .menu a, .topbar .menu button {
-  color: #fff;
-}
-@media (max-width: 640px) {
-  body { padding-top: 56px; } /* ajuster si nécessaire */
-}
+
     /* Sous-menu */
     .submenu {
       position: absolute;
@@ -86,88 +84,86 @@
     }
     .submenu li a:hover, .submenu li a:focus { background: #f0f6ff; }
 
+    /* afficher au survol (desktop) et au focus */
+    .has-sub:hover .submenu,
+    .has-sub:focus-within .submenu {
+      display: block;
+    }
+
     /* Responsive simple */
     @media (max-width: 640px) {
+      body { padding-top: 56px; } /* assure l'espace pour la topbar sur mobile */
       .menu { flex-direction: column; align-items: flex-start; }
-      .submenu { position: static; box-shadow: none; border: 0; width: 100%; }
+      .submenu { position: static; box-shadow: none; border: 0; width: 100%; display: none; }
+      /* activation via JS (classe .mobile-open) montrera le submenu sur mobile */
+      .has-sub.mobile-open .submenu { display: block; }
+      .topbar { justify-content: space-between; padding: 0 0.5rem; }
     }
   </style>
 </head>
 <body>
-  <!-- Barre en haut -->
-<div class="topbar" role="navigation" aria-label="Barre de navigation principale">
-  <nav aria-label="Navigation principale">
-    <ul class="menu" role="menubar">
-      <li role="none"><a href="#" role="menuitem" tabindex="0">Accueil</a></li>
+  <!-- Barre en haut contenant le menu déroulant -->
+  <div class="topbar" role="navigation" aria-label="Barre de navigation principale">
+    <nav aria-label="Navigation principale">
+      <ul class="menu" role="menubar">
+        <li role="none"><a href="#" role="menuitem" tabindex="0">Accueil</a></li>
 
-      <li class="has-sub" role="none">
-        <button class="menu-toggle" aria-haspopup="true" aria-expanded="false" aria-controls="submenu-1" type="button">Produits ▾</button>
-        <ul id="submenu-1" class="submenu" role="menu" aria-hidden="true">
-      <li role="none">
-        <a href="#" role="menuitem" tabindex="0">Accueil</a>
-      </li>
- <!-- Menu principal : intégrez-le où vous voulez dans votre body -->
-      <li class="has-sub" role="none">
-        <button class="menu-toggle" aria-haspopup="true" aria-expanded="false" aria-controls="submenu-1" type="button">
-          Âge
-        </button>
-        <ul id="submenu-1" class="submenu" role="menu" aria-hidden="true">
-          <li role="none"><a role="menuitem" tabindex="-1" href="#">20-30 ans</a></li>
-          <li role="none"><a role="menuitem" tabindex="-1" href="#">30-45 ans</a></li>
-          <li role="none"><a role="menuitem" tabindex="-1" href="#">45 et plus</a></li>
-        </ul>
-      </li>
+        <li class="has-sub" role="none">
+          <button class="menu-toggle" aria-haspopup="true" aria-expanded="false" aria-controls="submenu-1" type="button">Produits ▾</button>
+          <ul id="submenu-1" class="submenu" role="menu" aria-hidden="true">
+            <li role="none"><a role="menuitem" tabindex="-1" href="#">Produit A</a></li>
+            <li role="none"><a role="menuitem" tabindex="-1" href="#">Produit B</a></li>
+            <li role="none"><a role="menuitem" tabindex="-1" href="#">Produit C</a></li>
+          </ul>
+        </li>
 
-       <li class="has-sub" role="none">
-        <button class="menu-toggle" aria-haspopup="true" aria-expanded="false" aria-controls="submenu-2" type="button">
-         Contact
-        </button>
-          <ul id="submenu-2" class="submenu" role="menu" aria-hidden="true">
-          <li role="none"><a role="menuitem" tabindex="-2" href="#">telephone</a></li>
-          <li role="none"><a role="menuitem" tabindex="-2" href="#">mail</a></li>
-          <li role="none"><a role="menuitem" tabindex="-2" href="#">adresse</a></li>
-        </ul>
-      </li>
-    </ul>
-  </nav>
-</div>
+        <li role="none"><a href="#" role="menuitem" tabindex="0">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+
   <header>
     <h1>Recherche d'appartements</h1>
   </header>
 
+  <main id="main" tabindex="-1">
+    <!-- contenu principal -->
+    <p>Bienvenue — utilisez la navigation pour explorer.</p>
+  </main>
+
   <script>
-    // Script minimal pour toggler le sous-menu et fermer si clic en dehors
+    // Script minimal : gestion du clic pour ouvrir/fermer le sous-menu,
+    // et gestion mobile (toggle de la classe .mobile-open).
     document.addEventListener('DOMContentLoaded', () => {
       const toggles = Array.from(document.querySelectorAll('.menu-toggle'));
       // état initial
       toggles.forEach(btn => {
         const submenu = document.getElementById(btn.getAttribute('aria-controls'));
         btn.setAttribute('aria-expanded', 'false');
-        if (submenu) {
-          submenu.setAttribute('aria-hidden', 'true');
-          submenu.querySelectorAll('[role="menuitem"]').forEach(i => i.setAttribute('tabindex','-1'));
-        }
+        if (submenu) submenu.setAttribute('aria-hidden', 'true');
+        // rendre items non tabbables initialement
+        if (submenu) submenu.querySelectorAll('[role="menuitem"]').forEach(i => i.setAttribute('tabindex','-1'));
       });
 
       toggles.forEach(btn => {
         const submenu = document.getElementById(btn.getAttribute('aria-controls'));
+        const parentLi = btn.closest('.has-sub');
 
         btn.addEventListener('click', (e) => {
+          e.preventDefault();
           const expanded = btn.getAttribute('aria-expanded') === 'true';
-          // fermer les autres menus
+
+          // fermer les autres
           toggles.forEach(t => {
             const s = document.getElementById(t.getAttribute('aria-controls'));
+            const p = t.closest('.has-sub');
             if (t !== btn) {
               t.setAttribute('aria-expanded', 'false');
-              if (s) {
-                s.classList.remove('open');
-                s.setAttribute('aria-hidden', 'true');
-                s.querySelectorAll('[role="menuitem"]').forEach(i => i.setAttribute('tabindex','-1'));
-              }
+              if (s) { s.classList.remove('open'); s.setAttribute('aria-hidden','true'); s.querySelectorAll('[role="menuitem"]').forEach(i => i.setAttribute('tabindex','-1')); }
+              if (p) p.classList.remove('mobile-open');
             }
           });
 
-          // basculer celui-ci
           if (!expanded && submenu) {
             btn.setAttribute('aria-expanded', 'true');
             submenu.classList.add('open');
@@ -175,11 +171,13 @@
             submenu.querySelectorAll('[role="menuitem"]').forEach(i => i.setAttribute('tabindex','0'));
             const first = submenu.querySelector('[role="menuitem"]');
             if (first) first.focus();
+            if (parentLi) parentLi.classList.add('mobile-open'); // montre sur mobile
           } else if (submenu) {
             btn.setAttribute('aria-expanded', 'false');
             submenu.classList.remove('open');
             submenu.setAttribute('aria-hidden', 'true');
             submenu.querySelectorAll('[role="menuitem"]').forEach(i => i.setAttribute('tabindex','-1'));
+            if (parentLi) parentLi.classList.remove('mobile-open');
             btn.focus();
           }
         });
@@ -193,12 +191,31 @@
         if (!clickedInsideToggle && !clickedInsideSubmenu) {
           toggles.forEach(t => {
             const s = document.getElementById(t.getAttribute('aria-controls'));
+            const p = t.closest('.has-sub');
             if (s) {
               t.setAttribute('aria-expanded', 'false');
               s.classList.remove('open');
-              s.setAttribute('aria-hidden', 'true');
+              s.setAttribute('aria-hidden','true');
               s.querySelectorAll('[role="menuitem"]').forEach(i => i.setAttribute('tabindex','-1'));
             }
+            if (p) p.classList.remove('mobile-open');
+          });
+        }
+      });
+
+      // fermer sur ESC global
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          toggles.forEach(t => {
+            const s = document.getElementById(t.getAttribute('aria-controls'));
+            const p = t.closest('.has-sub');
+            if (s) {
+              t.setAttribute('aria-expanded', 'false');
+              s.classList.remove('open');
+              s.setAttribute('aria-hidden','true');
+              s.querySelectorAll('[role="menuitem"]').forEach(i => i.setAttribute('tabindex','-1'));
+            }
+            if (p) p.classList.remove('mobile-open');
           });
         }
       });
