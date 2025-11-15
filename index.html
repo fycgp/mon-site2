@@ -1,229 +1,221 @@
-<!doctype html>
+ChatGPT
+
+Se connecter
+
+Vous avez dit :
+Comment je fais pour que ma zone nav et ma zone section soit à la même hauteur 
+ChatGPT a dit :
+Pour mettre ta zone <nav> et ta zone <section> à la même hauteur, la solution la plus simple est d’utiliser Flexbox.
+
+✅ Méthode la plus simple : Flexbox
+HTML
+<div class="container">
+    <nav>Menu</nav>
+    <section>Contenu</section>
+</div>
+CSS
+.container {
+    display: flex;        /* Met les éléments sur une ligne */
+    height: 100vh;        /* Donne une hauteur fixe (ex : toute la page) */
+}
+
+nav {
+    width: 200px;
+    background: #eee;
+}
+
+section {
+    flex: 1;              /* Prend tout l’espace restant */
+    background: #ddd;
+}
+➡️ Résultat :
+
+<nav> et <section> sont automatiquement alignés à la même hauteur.
+
+Ils prennent tous les deux la hauteur de .container.
+
+🔧 Variante : hauteur automatique identique
+Si tu ne veux pas fixer une hauteur, et que tu veux simplement que les deux zones aient la même hauteur que le contenu le plus grand, fais juste :
+
+.container {
+    display: flex;
+}
+Flexbox s’occupe de tout automatiquement.
+
+❓ Si tu veux, envoie ton code
+Si tu me montres ton HTML/CSS actuel, je peux t’adapter une solution précise !
+
+Vous avez dit :
+<!Doctype>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>20-35ans</title>
+  </head>
+  <body>
+   <style>
+     h1{
+       text-align: center;
+       font-size: 150px;
+       color: 6C0277;
+       background-color: E5D1E0;
+     }
+     body{
+       background-color: GN0290;
+     }
+     nav{
+       font-size: 30px;
+     }
+     footer{
+       text-align: right; low;
+   </style>
+    
+  <header>
+    <h1><u>20-35 ans</u></h1>
+  </header>
+    
+  <section>
+    <article>
+      <h2>Titre</h2>
+      <p>article</p>
+    </article>
+  </section>
+    
+  <nav>
+    <ul>
+      <li class="déroulant">acceuil</li>
+      <li class="deroulant">âge</li>
+       <ul class="sous">
+         <li>20-35 ans</li>
+         <li>35-50 ans</li>
+         <li>50 ans et plus</li>
+       </ul>
+      <li class="deroulant">contact</li>
+       <ul class=sous>
+         <li>téléphone</li>
+         <li>mail</li>
+         <li>adresse</li>
+       </ul>
+    </ul>
+  </nav>
+ 
+  <footer>
+    <a href="index.html">acceuil</a>
+  </footer>
+</body>
+</html>
+ChatGPT a dit :
+Voici une version corrigée + une mise en page simple pour que <nav> et <section> soient à la même hauteur.
+
+Je corrige aussi plusieurs erreurs dans ton code (couleurs invalides, balises mal fermées, <style> mal placé, fautes dans les classes, etc.).
+
+✅ Version corrigée + nav et contenu à la même hauteur
+✔️ On met <nav> et <section> dans un conteneur en flexbox
+➡️ Ils auront automatiquement la même hauteur.
+
+⭐ Code propre et fonctionnel
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Recherche d'appartements</title>
-  <style>
-    :root {
-      --bg: #fff5ee;
-      --accent: #c8a2c8;
-      --focus: #2563eb;
-    }
-    html, body { height: 100%; margin: 0; }
-    body {
-      font-family: "Lucida Calligraphy", "Lucida Handwriting", "Segoe UI", Arial, sans-serif;
-      background-color: var(--bg);
-      color: #000;
-      line-height: 1.4;
-      padding: 70px 1rem 1rem 1rem; /* <-- padding-top augmenté pour laisser la place à la topbar */
-    }
+    <meta charset="UTF-8">
+    <title>20-35 ans</title>
 
-    header { text-align: center; margin-bottom: 1rem; }
-    header h1 {
-      margin: 0;
-      font-size: 2rem;
-      color: var(--accent);
-      text-decoration: underline;
-    }
+<style>
+/* ----- STYLES GÉNÉRAUX ----- */
+body {
+    margin: 0;
+    background-color: #9C0290;
+    font-family: Arial, sans-serif;
+}
 
-    /* Barre en haut (topbar) */
-    .topbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 56px;
-      background: var(--accent);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 200;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
-    }
-    .topbar .menu a, .topbar .menu button {
-      color: #000;
-    }
+/* ----- TITRE ----- */
+h1 {
+    text-align: center;
+    font-size: 80px;
+    color: #6C0277;
+    background-color: #E5D1E0;
+    margin: 0;
+    padding: 20px 0;
+}
 
-    /* Navigation (dans la topbar) */
-    .menu { list-style: none; margin: 0; padding: 0; display: flex; gap: 1rem; align-items: center; }
-    .menu > li { position: relative; }
-    .menu a, .menu button {
-      background: transparent;
-      border: none;
-      padding: 0.5rem 0.75rem;
-      cursor: pointer;
-      color: #222;
-      text-decoration: none;
-      font-size: 1rem;
-    }
-    .menu a:focus, .menu button:focus { outline: 2px solid var(--focus); outline-offset: 2px; }
+/* ----- LAYOUT FLEX ----- */
+.container {
+    display: flex;        /* met nav et section sur la même ligne */
+    min-height: 80vh;     /* donne une hauteur suffisante */
+}
 
-    /* Sous-menu */
-    .submenu {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      min-width: 12rem;
-      margin-top: 0.25rem;
-      background: #fff;
-      border: 1px solid #ddd;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-      list-style: none;
-      padding: 0.25rem 0;
-      display: none;
-      z-index: 100;
-    }
-    .submenu.open { display: block; }
-    .submenu li a {
-      display: block;
-      padding: 0.5rem 1rem;
-      color: #111;
-      text-decoration: none;
-    }
-    .submenu li a:hover, .submenu li a:focus { background: #f0f6ff; }
+/* ----- NAVIGATION ----- */
+nav {
+    width: 250px;
+    background: #F0C4E8;
+    padding: 20px;
+    font-size: 24px;
+}
 
-    /* afficher au survol (desktop) et au focus */
-    .has-sub:hover .submenu,
-    .has-sub:focus-within .submenu {
-      display: block;
-    }
+nav ul {
+    list-style: none;
+    padding: 0;
+}
 
-    /* Responsive simple */
-    @media (max-width: 640px) {
-      body { padding-top: 56px; } /* assure l'espace pour la topbar sur mobile */
-      .menu { flex-direction: column; align-items: flex-start; }
-      .submenu { position: static; box-shadow: none; border: 0; width: 100%; display: none; }
-      /* activation via JS (classe .mobile-open) montrera le submenu sur mobile */
-      .has-sub.mobile-open .submenu { display: block; }
-      .topbar { justify-content: space-between; padding: 0 0.5rem; }
-    }
-  </style>
+nav li {
+    margin: 10px 0;
+}
+
+/* ----- CONTENU ----- */
+section {
+    flex: 1;
+    background: #F7E6F5;
+    padding: 20px;
+}
+
+/* ----- FOOTER ----- */
+footer {
+    text-align: right;
+    padding: 10px;
+    background: #E5D1E0;
+}
+
+</style>
 </head>
+
 <body>
-  <!-- Barre en haut contenant le menu déroulant -->
-  <div class="topbar" role="navigation" aria-label="Barre de navigation principale">
-    <nav aria-label="Navigation principale">
-      <ul class="menu" role="menubar">
-        <li role="none"><a href="#" role="menuitem" tabindex="0">Accueil</a></li>
 
-        <li class="has-sub" role="none">
-          <button class="menu-toggle" aria-haspopup="true" aria-expanded="false" aria-controls="submenu-1" type="button">Âge ▾</button>
-          <ul id="submenu-1" class="submenu" role="menu" aria-hidden="true">
-            <li role="none"><a role="menuitem" tabindex="-1" href="#">20-35 ans</a></li>
-            <li role="none"><a role="menuitem" tabindex="-1" href="#">35-45</a></li>
-            <li role="none"><a role="menuitem" tabindex="-1" href="#">50 et plus</a></li>
-          </ul>
-        </li>
+<header>
+    <h1><u>20-35 ans</u></h1>
+</header>
 
-        <li class="has-sub" role="none">
-          <button class="menu-toggle" aria-haspopup="true" aria-expanded="false" aria-controls="submenu-2" type="button">Contact ▾</button>
-          <ul id="submenu-2" class="submenu" role="menu" aria-hidden="true">
-            <li role="none"><a role="menuitem" tabindex="-2" href="#">téléphone</a></li>
-            <li role="none"><a role="menuitem" tabindex="-2" href="#">mail</a></li>
-            <li role="none"><a role="menuitem" tabindex="-2" href="#">adresse</a></li>
-          </ul>
-        </li>
-        
-      </ul>
+<div class="container">
+    <nav>
+        <ul>
+            <li>Accueil</li>
+            <li>Âge
+                <ul class="sous">
+                    <li>20-35 ans</li>
+                    <li>35-50 ans</li>
+                    <li>50 ans et plus</li>
+                </ul>
+            </li>
+            <li>Contact
+                <ul class="sous">
+                    <li>Téléphone</li>
+                    <li>Mail</li>
+                    <li>Adresse</li>
+                </ul>
+            </li>
+        </ul>
     </nav>
-  </div>
 
-  <header>
-   <br>
-    <h1>Recherche d'appartements</h1>
-  </header>
+    <section>
+        <article>
+            <h2>Titre</h2>
+            <p>Article…</p>
+        </article>
+    </section>
+</div>
 
-  <script>
-    // Script minimal : gestion du clic pour ouvrir/fermer le sous-menu,
-    // et gestion mobile (toggle de la classe .mobile-open).
-    document.addEventListener('DOMContentLoaded', () => {
-      const toggles = Array.from(document.querySelectorAll('.menu-toggle'));
-      // état initial
-      toggles.forEach(btn => {
-        const submenu = document.getElementById(btn.getAttribute('aria-controls'));
-        btn.setAttribute('aria-expanded', 'false');
-        if (submenu) submenu.setAttribute('aria-hidden', 'true');
-        // rendre items non tabbables initialement
-        if (submenu) submenu.querySelectorAll('[role="menuitem"]').forEach(i => i.setAttribute('tabindex','-1'));
-      });
+<footer>
+    <a href="index.html">Accueil</a>
+</footer>
 
-      toggles.forEach(btn => {
-        const submenu = document.getElementById(btn.getAttribute('aria-controls'));
-        const parentLi = btn.closest('.has-sub');
-
-        btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          const expanded = btn.getAttribute('aria-expanded') === 'true';
-
-          // fermer les autres
-          toggles.forEach(t => {
-            const s = document.getElementById(t.getAttribute('aria-controls'));
-            const p = t.closest('.has-sub');
-            if (t !== btn) {
-              t.setAttribute('aria-expanded', 'false');
-              if (s) { s.classList.remove('open'); s.setAttribute('aria-hidden','true'); s.querySelectorAll('[role="menuitem"]').forEach(i => i.setAttribute('tabindex','-1')); }
-              if (p) p.classList.remove('mobile-open');
-            }
-          });
-
-          if (!expanded && submenu) {
-            btn.setAttribute('aria-expanded', 'true');
-            submenu.classList.add('open');
-            submenu.setAttribute('aria-hidden', 'false');
-            submenu.querySelectorAll('[role="menuitem"]').forEach(i => i.setAttribute('tabindex','0'));
-            const first = submenu.querySelector('[role="menuitem"]');
-            if (first) first.focus();
-            if (parentLi) parentLi.classList.add('mobile-open'); // montre sur mobile
-          } else if (submenu) {
-            btn.setAttribute('aria-expanded', 'false');
-            submenu.classList.remove('open');
-            submenu.setAttribute('aria-hidden', 'true');
-            submenu.querySelectorAll('[role="menuitem"]').forEach(i => i.setAttribute('tabindex','-1'));
-            if (parentLi) parentLi.classList.remove('mobile-open');
-            btn.focus();
-          }
-        });
-      });
-
-      // fermer au clic en dehors
-      document.addEventListener('click', (ev) => {
-        const target = ev.target;
-        const clickedInsideToggle = toggles.some(t => t.contains(target));
-        const clickedInsideSubmenu = Array.from(document.querySelectorAll('.submenu')).some(s => s.contains(target));
-        if (!clickedInsideToggle && !clickedInsideSubmenu) {
-          toggles.forEach(t => {
-            const s = document.getElementById(t.getAttribute('aria-controls'));
-            const p = t.closest('.has-sub');
-            if (s) {
-              t.setAttribute('aria-expanded', 'false');
-              s.classList.remove('open');
-              s.setAttribute('aria-hidden','true');
-              s.querySelectorAll('[role="menuitem"]').forEach(i => i.setAttribute('tabindex','-1'));
-            }
-            if (p) p.classList.remove('mobile-open');
-          });
-        }
-      });
-
-      // fermer sur ESC global
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-          toggles.forEach(t => {
-            const s = document.getElementById(t.getAttribute('aria-controls'));
-            const p = t.closest('.has-sub');
-            if (s) {
-              t.setAttribute('aria-expanded', 'false');
-              s.classList.remove('open');
-              s.setAttribute('aria-hidden','true');
-              s.querySelectorAll('[role="menuitem"]').forEach(i => i.setAttribute('tabindex','-1'));
-            }
-            if (p) p.classList.remove('mobile-open');
-          });
-        }
-      });
-    });
-  </script>
 </body>
 </html>
